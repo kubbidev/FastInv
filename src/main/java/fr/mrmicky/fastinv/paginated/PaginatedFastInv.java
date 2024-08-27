@@ -49,7 +49,7 @@ public abstract class PaginatedFastInv<T> extends FastInv {
         this.contents = this::contents;
     }
 
-    public abstract List<T> contents();
+    protected abstract List<T> contents();
 
     /**
      * Retrieves a list of integers representing the slot indices
