@@ -49,6 +49,13 @@ public abstract class PaginatedFastInv<T> extends FastInv {
         this.contents = contents;
     }
 
+    /**
+     * Retrieves a list of integers representing the slot indices
+     * within the inventory where the content for the current page is displayed.
+     *
+     * @return a {@link List} of {@link Integer} objects, each representing an
+     * inventory slot index used for displaying content on the current page.
+     */
     public abstract List<Integer> contentSlots();
 
     public boolean isFirstDraw() {

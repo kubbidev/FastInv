@@ -116,6 +116,12 @@ public class FastInv implements InventoryHolder {
         this.inventory = inv;
     }
 
+    /**
+     * Method use to draw inventory content, this is the method used to refresh inventory content
+     * when you animate it using the {@link #animate(Plugin, long, long)} method.
+     *
+     * @param viewer of the current inventory
+     */
     public void redraw(Player viewer) {
     }
 

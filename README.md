@@ -103,6 +103,8 @@ public void onEnable() {
 Now you can create an inventory by make a class that extends `FastInv`, and add items in the constructor. 
 You can also override `onClick`, `onClose` and `onOpen` if you need.
 
+*If you want to create an animated inventory, you need to add elements inside the `redraw` override method and not in the constructor, so that they are updated.
+
 Small example inventory:
 
 ```java
