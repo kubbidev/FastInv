@@ -18,7 +18,7 @@ import java.util.function.Supplier;
  * The project is on <a href="https://github.com/MrMicky-FR/FastInv">GitHub</a>.
  *
  * @author kubbidev
- * @version 1.0.0
+ * @version 1.0.1
  */
 public abstract class PaginatedFastInv<T> extends FastInv {
     private int page = 1;
@@ -28,26 +28,28 @@ public abstract class PaginatedFastInv<T> extends FastInv {
     // This remains true until after #redraw is called for the first time
     private boolean firstDraw = true;
 
-    public PaginatedFastInv(Supplier<List<T>> contents, int size) {
-        this(contents, owner -> Bukkit.createInventory(owner, size));
+    public PaginatedFastInv(int size) {
+        this(owner -> Bukkit.createInventory(owner, size));
     }
 
-    public PaginatedFastInv(Supplier<List<T>> contents, int size, String title) {
-        this(contents, owner -> Bukkit.createInventory(owner, size, title));
+    public PaginatedFastInv(int size, String title) {
+        this(owner -> Bukkit.createInventory(owner, size, title));
     }
 
-    public PaginatedFastInv(Supplier<List<T>> contents, InventoryType type) {
-        this(contents, owner -> Bukkit.createInventory(owner, type));
+    public PaginatedFastInv(InventoryType type) {
+        this(owner -> Bukkit.createInventory(owner, type));
     }
 
-    public PaginatedFastInv(Supplier<List<T>> contents, InventoryType type, String title) {
-        this(contents, owner -> Bukkit.createInventory(owner, type, title));
+    public PaginatedFastInv(InventoryType type, String title) {
+        this(owner -> Bukkit.createInventory(owner, type, title));
     }
 
-    public PaginatedFastInv(Supplier<List<T>> contents, Function<InventoryHolder, Inventory> inventoryFunction) {
+    public PaginatedFastInv(Function<InventoryHolder, Inventory> inventoryFunction) {
         super(inventoryFunction);
-        this.contents = contents;
+        this.contents = this::contents;
     }
+
+    public abstract List<T> contents();
 
     /**
      * Retrieves a list of integers representing the slot indices
