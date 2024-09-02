@@ -18,7 +18,7 @@ import java.util.function.Function;
  * @author kubbidev
  * @implNote Maybe make another version with the {@link java.util.function.Supplier}
  * in the constructors for content list.
- * @version 1.0.1
+ * @version 1.0.2
  */
 public abstract class PaginatedFastInv<T> extends FastInv {
     private int page = 1;
@@ -75,6 +75,19 @@ public abstract class PaginatedFastInv<T> extends FastInv {
         return null;
     }
 
+    public void nextPage(Player viewer) {
+        drawPage(viewer, ++this.page);
+    }
+
+    public void prevPage(Player viewer) {
+        drawPage(viewer, --this.page);
+    }
+
+    public void drawPage(Player viewer, int page) {
+        this.page = page;
+        redraw(viewer);
+    }
+
     @Override
     public void redraw(Player viewer) {
         List<Integer> slots = new ArrayList<>(contentSlots());
@@ -113,20 +126,12 @@ public abstract class PaginatedFastInv<T> extends FastInv {
         removeItem(prevPageItem.slot());
         removeItem(nextPageItem.slot());
         if (this.page > 1) {
-            setItem(prevPageItem.slot(), prevPageItem.item().apply(viewer, info), e -> {
-                if (this.page > 1) {
-                    this.page--;
-                    redraw((Player) e.getWhoClicked());
-                }
-            });
+            setItem(prevPageItem.slot(), prevPageItem.item().apply(viewer, info),
+                    e -> prevPage((Player) e.getWhoClicked()));
         }
         if (this.page < info.maxPages()) {
-            setItem(nextPageItem.slot(), nextPageItem.item().apply(viewer, info), e -> {
-                if (this.page < info.maxPages()) {
-                    this.page++;
-                    redraw((Player) e.getWhoClicked());
-                }
-            });
+            setItem(nextPageItem.slot(), nextPageItem.item().apply(viewer, info),
+                    e -> nextPage((Player) e.getWhoClicked()));
         }
 
     }
